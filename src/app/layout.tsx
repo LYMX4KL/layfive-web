@@ -3,9 +3,9 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "LayFive — 5-Element Roulette Strategy",
+  title: "LayFive — Play Longer. Play Smarter. Play Together.",
   description:
-    "LayFive is the 5-element (Metal / Wood / Water / Fire / Earth) roulette tracking and strategy platform. Play smarter with live tracking, coaching signals, and the official reference cards.",
+    "LayFive is the 5-element (Metal / Wood / Water / Fire / Earth) roulette discipline system for cruise casino players. Not a winning system — a structured way to make your bankroll last and earn casino comps.",
 };
 
 export default function RootLayout({
@@ -24,16 +24,35 @@ export default function RootLayout({
             </Link>
             <div className="hidden md:flex items-center gap-6 text-sm text-neutral-300">
               <Link href="/about" className="hover:text-amber-400">About</Link>
+              <Link href="/learn" className="hover:text-amber-400">Learn</Link>
               <Link href="/pricing" className="hover:text-amber-400">Pricing</Link>
-              <Link href="/articles" className="hover:text-amber-400">Articles</Link>
-              <Link href="/app" className="hover:text-amber-400">Launch App</Link>
+              <Link href="/app" className="hover:text-amber-400">Open Tracker</Link>
             </div>
-            <Link
-              href="/signup"
-              className="rounded-md bg-amber-400 px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-amber-300 transition-colors"
-            >
-              Sign Up
-            </Link>
+            <div className="flex items-center gap-3">
+              {/* Simple language toggle: EN goes to /, 中文 goes to /zh.
+                  Both render the same HomePage component with a different locale. */}
+              <div className="hidden sm:flex items-center gap-1 text-xs text-neutral-400">
+                <Link
+                  href="/"
+                  className="px-2 py-1 rounded hover:text-amber-400 hover:bg-neutral-800"
+                >
+                  EN
+                </Link>
+                <span className="text-neutral-700">·</span>
+                <Link
+                  href="/zh"
+                  className="px-2 py-1 rounded hover:text-amber-400 hover:bg-neutral-800"
+                >
+                  中文
+                </Link>
+              </div>
+              <Link
+                href="/signup"
+                className="rounded-md bg-amber-400 px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-amber-300 transition-colors"
+              >
+                Sign Up
+              </Link>
+            </div>
           </nav>
         </header>
         <main className="flex-1">{children}</main>
@@ -45,14 +64,14 @@ export default function RootLayout({
                 <ul className="space-y-2">
                   <li><Link href="/about" className="hover:text-amber-400">About</Link></li>
                   <li><Link href="/pricing" className="hover:text-amber-400">Pricing</Link></li>
-                  <li><Link href="/app" className="hover:text-amber-400">Launch App</Link></li>
+                  <li><Link href="/app" className="hover:text-amber-400">Tracker</Link></li>
                 </ul>
               </div>
               <div>
                 <div className="font-semibold text-neutral-200 mb-3">Content</div>
                 <ul className="space-y-2">
+                  <li><Link href="/learn" className="hover:text-amber-400">Cruise Roulette Series</Link></li>
                   <li><Link href="/articles" className="hover:text-amber-400">Articles</Link></li>
-                  <li><Link href="/testimonials" className="hover:text-amber-400">Testimonials</Link></li>
                   <li><Link href="/cruise" className="hover:text-amber-400">Cruise Offerings</Link></li>
                 </ul>
               </div>
