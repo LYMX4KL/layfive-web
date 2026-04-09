@@ -24,7 +24,7 @@ export default function HomePage({ locale }: { locale: Locale }) {
       <section className="mx-auto max-w-6xl px-6 pt-20 pb-16 text-center">
         <div className="flex justify-center mb-8">
           <Image
-            src="/public/public/public/public/layfive-logo.png"
+            src="/layfive-logo.png"
             alt="LayFive"
             width={240}
             height={199}
