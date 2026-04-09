@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "LayFive — Play Longer. Play Smarter. Play Together.",
   description:
     "LayFive is the 5-element (Metal / Wood / Water / Fire / Earth) roulette discipline system for cruise casino players. Not a winning system — a structured way to make your bankroll last and earn casino comps.",
+  icons: {
+    icon: "/layfive-logo-square.png",
+    apple: "/layfive-logo-square.png",
+  },
 };
 
 export default function RootLayout({
@@ -18,9 +23,19 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-neutral-950 text-neutral-100">
         <header className="border-b border-neutral-800 bg-neutral-950/80 backdrop-blur sticky top-0 z-50">
           <nav className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
-            <Link href="/" className="flex items-center gap-1 font-semibold text-lg">
-              <span className="text-amber-400">Lay</span>
-              <span>Five</span>
+            <Link href="/" className="flex items-center gap-2 font-semibold text-lg">
+              <Image
+                src="/layfive-logo-square.png"
+                alt="LayFive"
+                width={32}
+                height={32}
+                priority
+                className="rounded"
+              />
+              <span>
+                <span className="text-amber-400">Lay</span>
+                <span>Five</span>
+              </span>
             </Link>
             <div className="hidden md:flex items-center gap-6 text-sm text-neutral-300">
               <Link href="/about" className="hover:text-amber-400">About</Link>
