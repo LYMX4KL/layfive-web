@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { dictionaries, type Locale } from "@/lib/dictionaries";
 
 // Five Elements visual data — shape & color come from the LayFive Logo Brief.
@@ -21,6 +22,16 @@ export default function HomePage({ locale }: { locale: Locale }) {
     <>
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pt-20 pb-16 text-center">
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/public/public/public/public/layfive-logo.png"
+            alt="LayFive"
+            width={240}
+            height={199}
+            priority
+            className="h-auto w-48 md:w-60"
+          />
+        </div>
         <div className="inline-block rounded-full border border-amber-400/30 bg-amber-400/5 px-4 py-1 text-xs text-amber-300 mb-6">
           {t.eyebrow}
         </div>
