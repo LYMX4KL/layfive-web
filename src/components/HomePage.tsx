@@ -14,7 +14,7 @@ const elements = [
 
 export default function HomePage({ locale }: { locale: Locale }) {
   const t = dictionaries[locale].home;
-  const trackerHref = locale === "zh" ? "/app" : "/app";
+    const trackerHref = "https://lymx4kl.github.io/layfive-app/";
   const learnHref = locale === "zh" ? "/zh/learn" : "/learn";
   const disclaimerHref = locale === "zh" ? "/zh/disclaimer" : "/disclaimer";
 
@@ -50,12 +50,14 @@ export default function HomePage({ locale }: { locale: Locale }) {
           >
             {t.ctaPrimary}
           </Link>
-          <Link
+          <a
             href={trackerHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-md border border-neutral-700 px-6 py-3 font-semibold text-neutral-100 hover:border-amber-400 hover:text-amber-400 transition-colors"
           >
             {t.ctaSecondary}
-          </Link>
+          </a>
         </div>
         <div className="mt-16 flex justify-center gap-6 md:gap-10">
           {elements.map((el) => (
