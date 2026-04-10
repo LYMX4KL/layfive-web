@@ -137,6 +137,9 @@ export default function PricingCards({ isLoggedIn }: { isLoggedIn: boolean }) {
               $2.50/mo billed annually
             </div>
           )}
+          <div className="mt-1 text-xs font-medium text-amber-300">
+            7-day free trial included
+          </div>
           <ul className="mt-6 space-y-2 text-sm text-neutral-100">
             {MEMBER_FEATURES.map((f) => (
               <li key={f}>{"\u2713"} {f}</li>
@@ -147,7 +150,7 @@ export default function PricingCards({ isLoggedIn }: { isLoggedIn: boolean }) {
             disabled={loading}
             className="mt-8 w-full rounded-md bg-amber-400 px-6 py-3 font-semibold text-neutral-900 hover:bg-amber-300 transition-colors disabled:opacity-50"
           >
-            {loading ? "Redirecting to checkout..." : "Become a Member"}
+            {loading ? "Redirecting to checkout..." : "Start 7-Day Free Trial"}
           </button>
         </div>
       </div>
