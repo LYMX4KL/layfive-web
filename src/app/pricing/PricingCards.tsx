@@ -106,7 +106,7 @@ export default function PricingCards({ isLoggedIn }: { isLoggedIn: boolean }) {
             ))}
           </ul>
           <button
-            onClick={() => router.push(isLoggedIn ? "/app" : "/signup")}
+            onClick={() => isLoggedIn ? window.location.href = "https://lymx4kl.github.io/layfive-app/" : router.push("/signup")}
             className="mt-8 w-full rounded-md border border-neutral-700 px-6 py-3 font-semibold hover:border-amber-400 hover:text-amber-400 transition-colors"
           >
             {isLoggedIn ? "Open Tracker" : "Start Free"}
