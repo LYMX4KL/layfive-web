@@ -1,5 +1,5 @@
-import { stripe } from "@/lib/stripe";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getStripe } from "@/lib/stripe";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import Stripe from "stripe";
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
+    event = getStripe().webhooks.constructEvent(
       body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
         const customerId = subscription.customer as string;
 
         // Find user by stripe_customer_id
-        const { data: profile } = await supabaseAdmin
+        const { data: profile } = await getSupabaseAdmin()
           .from("profiles")
           .select("id")
           .eq("stripe_customer_id", customerId)
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
                   ? "canceled"
                   : "free";
 
-          await supabaseAdmin
+          await getSupabaseAdmin()
             .from("profiles")
             .update({
               subscription_status: status,
@@ -71,14 +71,14 @@ export async function POST(request: Request) {
         const subscription = event.data.object as Stripe.Subscription;
         const customerId = subscription.customer as string;
 
-        const { data: profile } = await supabaseAdmin
+        const { data: profile } = await getSupabaseAdmin()
           .from("profiles")
           .select("id")
           .eq("stripe_customer_id", customerId)
           .single();
 
         if (profile) {
-          await supabaseAdmin
+          await getSupabaseAdmin()
             .from("profiles")
             .update({
               subscription_status: "free",
