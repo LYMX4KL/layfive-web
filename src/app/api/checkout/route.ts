@@ -49,6 +49,7 @@ export async function POST(request: Request) {
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/account?checkout=success`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing?checkout=canceled`,
       subscription_data: {
+        trial_period_days: 7,
         metadata: { supabase_user_id: user.id },
       },
     });
