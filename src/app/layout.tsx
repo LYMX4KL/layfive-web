@@ -27,7 +27,7 @@ export default function RootLayout({
               <Link href="/about" className="hover:text-amber-400">About</Link>
               <Link href="/learn" className="hover:text-amber-400">Learn</Link>
               <Link href="/pricing" className="hover:text-amber-400">Pricing</Link>
-              <Link href="/app" className="hover:text-amber-400">Open Tracker</Link>
+              <a href="https://lymx4kl.github.io/layfive-app/" className="hover:text-amber-400">Open Tracker</a>
             </div>
             <div className="flex items-center gap-3">
               {/* Simple language toggle: EN goes to /, 中文 goes to /zh.
@@ -60,7 +60,7 @@ export default function RootLayout({
                 <ul className="space-y-2">
                   <li><Link href="/about" className="hover:text-amber-400">About</Link></li>
                   <li><Link href="/pricing" className="hover:text-amber-400">Pricing</Link></li>
-                  <li><Link href="/app" className="hover:text-amber-400">Tracker</Link></li>
+                  <li><a href="https://lymx4kl.github.io/layfive-app/" className="hover:text-amber-400">Tracker</a></li>
                 </ul>
               </div>
               <div>
