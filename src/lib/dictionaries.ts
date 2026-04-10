@@ -75,6 +75,7 @@ export const dictionaries = {
           "✓ Basic Scorecard in the Tracker",
           "✗ Cover suggestions",
           "✗ Practice simulator",
+          "✗ W/L Log & Reports",
           "✗ Session history",
         ],
       },
@@ -89,6 +90,7 @@ export const dictionaries = {
           "✓ Cover element suggestions",
           "✓ Practice casino simulator",
           "✓ Full session history",
+          "✓ W/L tracking, reports & exports",
           "✓ Coaching signals & analysis",
           "✓ Priority AI support",
         ],
@@ -188,6 +190,7 @@ export const dictionaries = {
           "✓ 记录器基础计分卡",
           "✗ 覆盖建议",
           "✗ 练习模拟器",
+          "✗ 赢亏日志与报表",
           "✗ 历史记录",
         ],
       },
@@ -202,6 +205,7 @@ export const dictionaries = {
           "✓ 元素覆盖建议",
           "✓ 练习模拟器",
           "✓ 完整历史记录",
+          "✓ 赢亏追踪、报表与导出",
           "✓ 教练信号与分析",
           "✓ 优先 AI 客服",
         ],
@@ -236,4 +240,3 @@ export const dictionaries = {
 } as const;
 
 export type Dict = typeof dictionaries.en;
-
