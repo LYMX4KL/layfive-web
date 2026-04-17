@@ -8,7 +8,7 @@ import DisclaimerModal from "@/components/DisclaimerModal";
 
 const FREE_FEATURES = [
   { text: "Scorecard tab (spin entry & hit counters)", included: true },
-  { text: "Reference cards (all 5 elements)", included: true },
+  { text: "Reference cards (all 5 elements)", included: true },h
   { text: "All 6 video lessons", included: true },
   { text: "Basic session save/load", included: true },
   { text: "Cover suggestions & coaching signals", included: false },
@@ -178,7 +178,7 @@ export default function PricingCards({
             </span>
           </div>
           {billing === "monthly" && (
-            <div className="text-xs text-neutral-400">or $30/year \u2014 save 16%</div>
+            <div className="text-xs text-neutral-400">or $30/year — save 16%</div>
           )}
           {billing === "annual" && (
             <div className="text-xs text-neutral-400">$2.50/mo billed annually</div>
@@ -221,7 +221,7 @@ export default function PricingCards({
             </span>
           </div>
           {billing === "monthly" && (
-            <div className="text-xs text-neutral-400">or $70/year \u2014 save 27%</div>
+            <div className="text-xs text-neutral-400">or $70/year — save 27%</div>
           )}
           {billing === "annual" && (
             <div className="text-xs text-neutral-400">$5.83/mo billed annually</div>
