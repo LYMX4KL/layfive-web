@@ -189,7 +189,7 @@ export default function PricingCards({
 
           <ul className="mt-6 space-y-2 text-sm text-neutral-100">
             {PRO_FEATURES.map((f) => (
-              <li key={f}>\u2713 {f}</li>
+              <li key={f}>{f}</li>
             ))}
           </ul>
 
@@ -234,7 +234,7 @@ export default function PricingCards({
 
           <ul className="mt-6 space-y-2 text-sm text-neutral-100">
             {PREMIUM_FEATURES.map((f) => (
-              <li key={f}>\u2713 {f}</li>
+              <li key={f}>{f}</li>
             ))}
           </ul>
 
