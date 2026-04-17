@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import AccountActions from "./AccountActions";
 
-export const metadata = { title: "Account — LayFive" };
+export const metadata = { title: "Account \u2014 LayFive" };
 
 export default async function AccountPage() {
   const supabase = await createClient();
@@ -60,6 +60,48 @@ export default async function AccountPage() {
 
       <AccountActions isActive={isActive} isPastDue={isPastDue} />
 
+      {/* Upgrade prompts */}
       {tier === "free" && (
         <div className="mt-8 rounded-lg border border-amber-400/30 bg-amber-400/5 p-6 text-center">
-          <p className="text-neutral
+          <p className="text-neutral-300">
+            Upgrade to <strong className="text-amber-400">Pro</strong> or{" "}
+            <strong className="text-purple-400">Premium</strong> to unlock
+            analysis, coaching, Live P&amp;L, Photo OCR, and more.
+          </p>
+          <Link
+            href="/pricing"
+            className="mt-4 inline-block rounded-md bg-amber-400 px-6 py-3 font-semibold text-neutral-900 hover:bg-amber-300 transition-colors"
+          >
+            View Pricing
+          </Link>
+        </div>
+      )}
+
+      {tier === "pro" && (
+        <div className="mt-8 rounded-lg border border-purple-400/30 bg-purple-400/5 p-6 text-center">
+          <p className="text-neutral-300">
+            Upgrade to <strong className="text-purple-400">Premium</strong> to
+            unlock Live P&amp;L tracker, Photo OCR, Group sessions, Rules engine,
+            and lead-loss warnings.
+          </p>
+          <Link
+            href="/pricing"
+            className="mt-4 inline-block rounded-md bg-purple-400 px-6 py-3 font-semibold text-neutral-900 hover:bg-purple-300 transition-colors"
+          >
+            Upgrade to Premium
+          </Link>
+        </div>
+      )}
+
+      {/* Open Tracker button */}
+      <div className="mt-6 text-center">
+        <a
+          href="https://lymx4kl.github.io/layfive-app/"
+          className="inline-block rounded-md border border-neutral-700 px-6 py-3 font-semibold hover:border-amber-400 hover:text-amber-400 transition-colors"
+        >
+          Open Tracker App
+        </a>
+      </div>
+    </div>
+  );
+}
