@@ -42,6 +42,7 @@ function SignupForm() {
       return;
     }
 
+    // Record disclaimer acceptance
     if (data.user) {
       try {
         await supabase.from("disclaimer_acceptances").insert({
@@ -51,6 +52,7 @@ function SignupForm() {
         });
       } catch (e) {
         console.error("Failed to record disclaimer:", e);
+        // Don't block signup for a logging failure
       }
     }
 
@@ -83,4 +85,91 @@ function SignupForm() {
           </div>
         )}
         <div>
-          <label className="block text-sm text
+          <label className="block text-sm text-neutral-400 mb-1">
+            Full Name
+          </label>
+          <input
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-4 py-3 text-neutral-100 placeholder:text-neutral-600 focus:border-amber-400 focus:outline-none"
+            placeholder="Kenny Lin"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-neutral-400 mb-1">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-4 py-3 text-neutral-100 placeholder:text-neutral-600 focus:border-amber-400 focus:outline-none"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-neutral-400 mb-1">
+            Password
+          </label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-4 py-3 text-neutral-100 placeholder:text-neutral-600 focus:border-amber-400 focus:outline-none"
+            placeholder="At least 6 characters"
+            minLength={6}
+            required
+          />
+        </div>
+
+        {/* Disclaimer acceptance */}
+        <div className="rounded-md border border-neutral-700 bg-neutral-900/50 p-4">
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={disclaimerAccepted}
+              onChange={(e) => setDisclaimerAccepted(e.target.checked)}
+              className="mt-1 h-4 w-4 rounded border-neutral-600 bg-neutral-800 text-amber-400 focus:ring-amber-400"
+            />
+            <span className="text-sm text-neutral-300">
+              I have read and agree to the{" "}
+              <Link
+                href="/disclaimer"
+                target="_blank"
+                className="text-amber-400 hover:text-amber-300 underline"
+              >
+                Important Disclaimer
+              </Link>
+              . I understand that LayFive is not a winning system, is for
+              entertainment and educational purposes only, and that gambling
+              involves risk of loss.
+            </span>
+          </label>
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading || !disclaimerAccepted}
+          className="w-full rounded-md bg-amber-400 px-6 py-3 font-semibold text-neutral-900 hover:bg-amber-300 transition-colors disabled:opacity-50"
+        >
+          {loading ? "Creating account..." : "Sign Up"}
+        </button>
+      </form>
+      <p className="mt-6 text-center text-sm text-neutral-400">
+        Already have an account?{" "}
+        <Link href="/login" className="text-amber-400 hover:text-amber-300">
+          Log in
+        </Link>
+      </p>
+    </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense>
+      <SignupForm />
+    </Suspense>
+  );
+}
