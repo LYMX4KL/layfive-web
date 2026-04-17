@@ -2,21 +2,73 @@
  * POST /api/ocr-vision
  *
  * Body: { image: "data:image/<fmt>;base64,<...>" }
- * Headers: X-OCR-Secret: <shared secret>  (Phase 1 auth stopgap)
+ * Auth (one of):
+ *   - Authorization: Bearer <supabase_access_token>  (Pro+ tier check)
+ *   - X-OCR-Secret: <shared secret>  (legacy fallback)
  *
- * Calls Anthropic Claude Haiku vision model to extract roulette numbers
+ * Calls Anthropic Claude Sonnet vision model to extract roulette numbers
  * from a scoreboard photo. Returns { numbers: number[] } in the order
  * they appear on the board (top-to-bottom).
- *
- * Phase 2 will replace the shared-secret header with Supabase auth +
- * per-user Pro-tier quota enforcement.
  */
 import { NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 // Sonnet for higher OCR accuracy on LED scoreboards (Haiku misread too many digits).
-// Cost is ~5× Haiku but still tiny per-call (~$0.01). Gated to Premium tier anyway.
+// Cost is ~5× Haiku but still tiny per-call (~$0.01). Gated to Premium tier.
 const MODEL = "claude-sonnet-4-6";
+
+// Supabase admin client for verifying user tier
+function getSupabaseAdmin() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
+
+// Verify Supabase token and check Pro+ tier
+async function verifyProAccess(authHeader: string | null): Promise<{ ok: boolean; error?: string }> {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return { ok: false, error: "Missing Bearer token" };
+  }
+  const token = authHeader.slice(7);
+
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return { ok: false, error: "Server misconfigured (missing Supabase config)" };
+    }
+
+    // Create a client with the user's token to get their identity
+    const userClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+    });
+    const { data: { user }, error: userError } = await userClient.auth.getUser();
+    if (userError || !user) {
+      return { ok: false, error: "Invalid or expired token" };
+    }
+
+    // Check tier via admin client
+    const admin = getSupabaseAdmin();
+    const { data: profile } = await admin
+      .from("profiles")
+      .select("tier")
+      .eq("id", user.id)
+      .single();
+
+    const tier = profile?.tier || "free";
+    const TIER_LEVELS: Record<string, number> = { free: 0, pro: 1, premium: 2 };
+    if ((TIER_LEVELS[tier] ?? 0) < 2) {
+      return { ok: false, error: "Premium membership required" };
+    }
+
+    return { ok: true };
+  } catch (e) {
+    console.error("[ocr-vision] Auth verification error:", e);
+    return { ok: false, error: "Auth verification failed" };
+  }
+}
 
 const OCR_PROMPT = `You are reading a casino roulette electronic scoreboard photo.
 
@@ -48,17 +100,30 @@ ACCURACY RULES:
 
 export async function POST(request: Request) {
   try {
-    // Phase 1 auth: shared secret. Phase 2 will use Supabase session.
-    const provided = request.headers.get("x-ocr-secret");
-    const expected = process.env.OCR_SHARED_SECRET;
-    if (!expected) {
-      return NextResponse.json(
-        { error: "Server misconfigured (missing OCR_SHARED_SECRET)" },
-        { status: 500 }
-      );
+    // Auth: try Supabase token first, fall back to legacy shared secret
+    const authHeader = request.headers.get("authorization");
+    const legacySecret = request.headers.get("x-ocr-secret");
+    const expectedSecret = process.env.OCR_SHARED_SECRET;
+
+    let authorized = false;
+
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      // Supabase token auth — verify user is Pro+
+      const result = await verifyProAccess(authHeader);
+      if (!result.ok) {
+        return NextResponse.json({ error: result.error }, { status: 401 });
+      }
+      authorized = true;
+    } else if (legacySecret && expectedSecret && legacySecret === expectedSecret) {
+      // Legacy shared secret — still works as fallback
+      authorized = true;
     }
-    if (!provided || provided !== expected) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    if (!authorized) {
+      return NextResponse.json(
+        { error: "Unauthorized — log in with a Premium account" },
+        { status: 401 }
+      );
     }
 
     const apiKey = process.env.ANTHROPIC_API_KEY;
