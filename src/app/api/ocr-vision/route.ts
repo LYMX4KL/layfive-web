@@ -71,6 +71,8 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const dataUrl: string | undefined = body?.image;
+    // AI Learning: client may send dynamic prompt hints based on user correction history
+    const hints: string = typeof body?.hints === "string" ? body.hints.slice(0, 500) : "";
     if (!dataUrl || typeof dataUrl !== "string" || !dataUrl.startsWith("data:")) {
       return NextResponse.json(
         { error: "Missing or invalid 'image' (expected data: URL)" },
@@ -110,7 +112,7 @@ export async function POST(request: Request) {
               type: "image",
               source: { type: "base64", media_type: mediaType, data: base64 },
             },
-            { type: "text", text: OCR_PROMPT },
+            { type: "text", text: OCR_PROMPT + (hints ? "\n" + hints : "") },
           ],
         },
       ],
