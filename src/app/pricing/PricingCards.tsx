@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import DisclaimerModal from "@/components/DisclaimerModal";
 
-/* ── Feature lists per tier ─────────────────────────────── */
+/* ââ Feature lists per tier âââââââââââââââââââââââââââââââ */
 
 const FREE_FEATURES = [
   { text: "Scorecard tab (spin entry & hit counters)", included: true },
@@ -33,14 +33,14 @@ const PRO_FEATURES = [
 
 const PREMIUM_FEATURES = [
   "Everything in Pro",
-  "Live P&L tracker (bankroll, per-spin net, stats panel)",
+  "Live P\u0026L tracker (bankroll, per-spin net, stats panel)",
   "Photo OCR \u2014 scan scorecard from camera via AI Vision",
   "Group session sharing (6-digit code, host-only entry)",
   "Rules engine embedded in scorecard (H1\u2013H4, C1\u2013C3)",
-  "Element selector & lead-loss warning",
+  "Element selector \u0026 lead-loss warning",
 ];
 
-/* ── Component ──────────────────────────────────────────── */
+/* ââ Component ââââââââââââââââââââââââââââââââââââââââââââ */
 
 export default function PricingCards({
   isLoggedIn,
@@ -83,7 +83,7 @@ export default function PricingCards({
 
   function handleSubscribe(tier: "pro" | "premium") {
     if (!isLoggedIn) {
-      router.push(\`/signup?redirect=/pricing\`);
+      router.push(`/signup?redirect=/pricing`);
       return;
     }
     // Show disclaimer modal before checkout
@@ -117,21 +117,21 @@ export default function PricingCards({
         <div className="inline-flex rounded-full border border-neutral-700 p-1">
           <button
             onClick={() => setBilling("monthly")}
-            className={\`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
               billing === "monthly"
                 ? "bg-amber-400 text-neutral-900"
                 : "text-neutral-400 hover:text-neutral-200"
-            }\`}
+            }`}
           >
             Monthly
           </button>
           <button
             onClick={() => setBilling("annual")}
-            className={\`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
               billing === "annual"
                 ? "bg-amber-400 text-neutral-900"
                 : "text-neutral-400 hover:text-neutral-200"
-            }\`}
+            }`}
           >
             Annual (save 16%)
           </button>
@@ -139,7 +139,7 @@ export default function PricingCards({
       </div>
 
       <div className="mt-12 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {/* ── Free tier ──────────────────────────── */}
+        {/* ââ Free tier ââââââââââââââââââââââââââââ */}
         <div className="rounded-lg border border-neutral-800 bg-neutral-900/50 p-8">
           <div className="text-sm uppercase tracking-wider text-neutral-500">Free</div>
           <div className="mt-2 text-4xl font-bold">$0</div>
@@ -165,7 +165,7 @@ export default function PricingCards({
           </button>
         </div>
 
-        {/* ── Pro tier ───────────────────────────── */}
+        {/* ââ Pro tier âââââââââââââââââââââââââââââ */}
         <div className="rounded-lg border border-amber-400 bg-amber-400/5 p-8 relative">
           <div className="absolute -top-3 left-8 rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold text-neutral-900">
             Most Popular
@@ -208,7 +208,7 @@ export default function PricingCards({
           )}
         </div>
 
-        {/* ── Premium tier ───────────────────────── */}
+        {/* ââ Premium tier âââââââââââââââââââââââââ */}
         <div className="rounded-lg border border-purple-400 bg-purple-400/5 p-8 relative">
           <div className="absolute -top-3 left-8 rounded-full bg-purple-400 px-3 py-1 text-xs font-semibold text-neutral-900">
             Full Access
