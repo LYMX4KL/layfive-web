@@ -14,26 +14,37 @@
 import { NextResponse } from "next/server";
 
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
-const MODEL = "claude-haiku-4-5-20251001";
+// Sonnet for higher OCR accuracy on LED scoreboards (Haiku misread too many digits).
+// Cost is ~5× Haiku but still tiny per-call (~$0.01). Gated to Premium tier anyway.
+const MODEL = "claude-sonnet-4-6";
 
-const OCR_PROMPT = `You are reading a casino roulette scoreboard photo.
+const OCR_PROMPT = `You are reading a casino roulette electronic scoreboard photo.
 
-The board shows a list of roulette numbers (each is 0, 00, or 1-36), stacked in a single column. Numbers are typically color-coded: green (0 / 00), red (certain numbers), black (the rest).
+SCOREBOARD LAYOUT:
+- Numbers are displayed in a vertical column (sometimes multiple columns if the history is long).
+- Each entry is a roulette result: 0, 00, or 1–36.
+- Numbers are typically shown as colored circles or colored text: green for 0/00, red or black for 1–36.
+- The most recent spin is usually at the bottom (but sometimes at the top). Read ALL visible numbers in their displayed order, top to bottom, left column first if multiple columns.
 
-Your task: Extract ONLY the numbers you can clearly and confidently read, IN THE ORDER THEY APPEAR from top to bottom.
+Your task: Extract ONLY the numbers you can clearly read, in display order (top to bottom, left to right).
 
 Return ONLY a JSON object in this exact format, with no other text:
 {"numbers": [<n1>, <n2>, ...]}
 
-CRITICAL ACCURACY RULES — follow these exactly:
-1. ONLY include a number if you are highly confident you have read it correctly.
-2. If any digit is blurry, partly cut off, covered, or ambiguous (e.g. could be 3 or 8, 11 or 17, 5 or 6) — SKIP the number entirely. Do not guess.
-3. Do NOT infer, extrapolate, or "fill in" numbers that aren't clearly visible.
-4. Do NOT invent numbers from text, logos, menus, button labels, or UI elements. Only read numbers that are plainly part of the scoreboard's results column.
-5. Returning fewer, correct numbers is FAR better than returning more numbers with errors. The user can add missing numbers manually.
-6. If the board shows "00" (double zero), represent it as 0 (the app treats single/double zero the same).
-7. Each entry must be an integer 0-36.
-8. If the photo is too blurry, at a bad angle, or contains no clearly readable roulette numbers, return {"numbers": []}. It is better to return an empty list than wrong data.`;
+ACCURACY RULES:
+1. ONLY include a number if you are confident you can read it correctly.
+2. Watch for commonly confused pairs on LED/electronic displays:
+   - 6 vs 9 (look at position of the loop)
+   - 1 vs 7 (7 has a horizontal stroke at top)
+   - 3 vs 8 (8 has two closed loops)
+   - 13 vs 18, 23 vs 28, 31 vs 36 — double-check both digits
+   - 11 vs 17, 15 vs 16 — verify the second digit carefully
+3. If a number is blurry, partly cut off, or genuinely ambiguous — SKIP it entirely. Do not guess.
+4. Do NOT extract numbers from text, logos, table-minimum signs, menus, bet amounts, or any UI element. Only read the scoreboard results column.
+5. Fewer correct numbers is MUCH better than more numbers with errors.
+6. "00" (double zero) → represent as 0.
+7. Every entry must be an integer 0–36. Discard anything outside this range.
+8. If the photo has no clearly readable scoreboard numbers, return {"numbers": []}.`;
 
 export async function POST(request: Request) {
   try {
