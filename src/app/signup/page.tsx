@@ -52,7 +52,6 @@ function SignupForm() {
         });
       } catch (e) {
         console.error("Failed to record disclaimer:", e);
-        // Don't block signup for a logging failure
       }
     }
 
@@ -143,7 +142,8 @@ function SignupForm() {
               </Link>
               . I understand that LayFive is not a winning system, is for
               entertainment and educational purposes only, and that gambling
-              involves risk of loss.
+              involves risk of loss. I confirm that I am at least 21 years old
+              (or the legal gambling age in my jurisdiction).
             </span>
           </label>
         </div>
