@@ -30,7 +30,6 @@ export default function DisclaimerModal({ tier, onAccept, onCancel }: Disclaimer
       }
     } catch (e) {
       console.error("Failed to record disclaimer:", e);
-      // Continue anyway â don't block checkout for a logging failure
     }
 
     onAccept();
@@ -83,6 +82,28 @@ export default function DisclaimerModal({ tier, onAccept, onCancel }: Disclaimer
               {tier === "pro" && " The 7-day free trial can be canceled at no charge before the trial ends."}
             </p>
           </div>
+
+          <div>
+            <h3 className="font-semibold text-neutral-100">5. Age requirement</h3>
+            <p className="mt-1">
+              You must be at least 21 years old (or the minimum legal gambling age in your
+              jurisdiction, whichever is higher) to use LayFive. By proceeding, you confirm
+              that you meet this requirement.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-neutral-100">6. Jurisdiction</h3>
+            <p className="mt-1">
+              You are solely responsible for determining whether online gambling tracking
+              tools are permitted in your jurisdiction. LayFive makes no representation
+              that its services are legal or available in all locations.
+            </p>
+          </div>
+
+          <p className="mt-2 text-xs text-neutral-500 text-center">
+            &copy; 2026 LayFive. All rights reserved.
+          </p>
         </div>
 
         <label className="mt-6 flex items-start gap-3 cursor-pointer">
@@ -94,7 +115,8 @@ export default function DisclaimerModal({ tier, onAccept, onCancel }: Disclaimer
           />
           <span className="text-sm text-neutral-200">
             I have read and agree to the above disclaimer. I understand that LayFive
-            is not a winning system and that gambling involves risk of loss.
+            is not a winning system and that gambling involves risk of loss. I confirm
+            that I am at least 21 years old.
           </span>
         </label>
 
