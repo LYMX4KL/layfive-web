@@ -96,7 +96,7 @@ export default function RootLayout({
               </div>
             </div>
             <div className="mt-10 pt-6 border-t border-neutral-800 text-xs text-neutral-500">
-              © 2026 Kenny Lin / LayFive™. All rights reserved. LayFive strategies,
+              © 2026 LayFive™. All rights reserved. LayFive strategies,
               reference cards, and app designs are proprietary intellectual property.
               For entertainment and educational purposes only — no guarantee of winnings.
             </div>
