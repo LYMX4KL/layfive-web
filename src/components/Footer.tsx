@@ -12,7 +12,7 @@ export default function Footer() {
           <Link href="/pricing" className="hover:text-neutral-300 transition-colors">
             Pricing
           </Link>
-          
+          <a          
             href="https://lymx4kl.github.io/layfive-app/"
             target="_blank"
             rel="noopener noreferrer"
