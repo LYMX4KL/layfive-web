@@ -8,7 +8,7 @@ import DisclaimerModal from "@/components/DisclaimerModal";
 
 const FREE_FEATURES = [
   { text: "Scorecard tab (spin entry & hit counters)", included: true },
-  { text: "Reference cards (all 5 elements)", included: true },h
+  { text: "Reference cards (all 5 elements)", included: true },
   { text: "All 6 video lessons", included: true },
   { text: "Basic session save/load", included: true },
   { text: "Cover suggestions & coaching signals", included: false },
