@@ -56,28 +56,59 @@ export default function PricingCards({
 
   async function startCheckout(tier: "pro" | "premium") {
     setLoading(tier);
-
-    const priceId =
-      tier === "pro"
-        ? billing === "monthly"
-          ? process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_MONTHLY
-          : process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ANNUAL
-        : billing === "monthly"
+    try {
+      const priceId =
+        tier === "pro"
+          ? billing === "monthly"
+            ? process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_MONTHLY
+            : process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ANNUAL
+          : billing === "monthly"
           ? process.env.NEXT_PUBLIC_STRIPE_PREMIUM_PRICE_MONTHLY
           : process.env.NEXT_PUBLIC_STRIPE_PREMIUM_PRICE_ANNUAL;
 
-    const res = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ priceId, tier }),
-    });
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId, tier }),
+      });
 
-    const data = await res.json();
-    if (data.url) {
-      window.location.href = data.url;
-    } else {
+      // Parse JSON defensively. If the response is HTML (e.g. Vercel
+      // gateway timeout, edge error), JSON.parse throws and the button
+      // would otherwise hang in "Redirecting..." forever.
+      let data: { url?: string; error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+
+      // Any non-success response: ALWAYS reset loading and show a message.
       setLoading(null);
-      alert("Something went wrong. Please try again.");
+      if (res.status === 401) {
+        alert(
+          "Your session has expired. Please sign in again, then retry the upgrade."
+        );
+      } else if (data.error) {
+        alert(
+          `Could not start checkout: ${data.error}. Please try again, or contact support if this persists.`
+        );
+      } else {
+        alert(
+          `Could not start checkout (status ${res.status}). Please try again. If this keeps happening, contact support.`
+        );
+      }
+    } catch (err) {
+      // Network-level error: fetch threw before we got any response.
+      console.error("Checkout request failed:", err);
+      setLoading(null);
+      alert(
+        "Could not reach checkout. Please check your connection and try again."
+      );
     }
   }
 
