@@ -96,9 +96,10 @@ export async function POST(request: Request) {
               subscription_id: subscription.id,
               subscription_price_id:
                 subscription.items.data[0]?.price.id || null,
-              subscription_current_period_end: new Date(
-                subscription.current_period_end * 1000
-              ).toISOString(),
+              subscription_current_period_end: (() => {
+                const cpe = subscription.items?.data?.[0]?.current_period_end ?? (subscription as { current_period_end?: number }).current_period_end;
+                return cpe ? new Date(cpe * 1000).toISOString() : null;
+              })(),
               tier: tier,
             })
             .eq("id", profile.id);
