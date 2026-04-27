@@ -44,7 +44,7 @@ export const dictionaries = {
         {
           title: "Discipline, not luck",
           body:
-            "Bring no more than 20 full bets to the table. Set your walk-away point in advance, both for winning and losing. Never lend money in a casino, never chase, never raise bets out of emotion. The rules are simple, but they are non-negotiable.",
+            "Bring no more than 4 full bets to the table. Set your walk-away point in advance, both for winning and losing. Never lend money in a casino, never chase, never raise bets out of emotion. The rules are simple, but they are non-negotiable.",
         },
         {
           title: "Comps, not winnings",
@@ -161,7 +161,7 @@ export const dictionaries = {
         {
           title: "纪律，不是运气",
           body:
-            "上桌不带超过 20 个完整下注的资金。事先设好赢和输的离场点。绝不在赌场借钱给别人，绝不追亏，绝不情绪化加注。规则简单，但不可妥协。",
+            "上桌不带超过 4 个完整下注的资金。事先设好赢和输的离场点。绝不在赌场借钱给别人，绝不追亏，绝不情绪化加注。规则简单，但不可妥协。",
         },
         {
           title: "回赠，不是赢钱",
