@@ -26,6 +26,8 @@ export default function RootLayout({
             <div className="hidden md:flex items-center gap-6 text-sm text-neutral-300">
               <Link href="/about" className="hover:text-amber-400">About</Link>
               <Link href="/learn" className="hover:text-amber-400">Learn</Link>
+              <Link href="/elements" className="hover:text-amber-400">Elements</Link>
+              <Link href="/how-to-use" className="hover:text-amber-400">How to Use</Link>
               <Link href="/pricing" className="hover:text-amber-400">Pricing</Link>
               <a href="https://lymx4kl.github.io/layfive-app/" className="hover:text-amber-400">Open Tracker</a>
             </div>
