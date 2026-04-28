@@ -71,7 +71,7 @@ export const dictionaries = {
         label: "Free",
         price: "$0",
         items: [
-          "✓ All 6 video lessons",
+          "✓ All 8 video lessons",
           "✓ Full curriculum & disclaimer",
           "✓ Five element reference cards",
           "✓ Basic Scorecard in the Tracker",
@@ -176,7 +176,7 @@ export const dictionaries = {
         { n: 1, title: "邮轮轮盘：不为赢钱——而是为了玩得更久并获得免费邮轮" },
         { n: 2, title: "五行布局——金、木、水、火、土" },
         { n: 3, title: "覆盖到底是什么意思（不是什么）" },
-        { n: 4, title: "资金管理——为什么 10 个完整下注是合适的起始资金" },
+        { n: 4, title: "下注规模、单位与赌场如何评级你" },
         { n: 5, title: "离场规则——盈利 50%、亏损 100%、或 100 圈" },
         { n: 6, title: "团体玩法——五个朋友，五种布局，一张桌子" },
       ],
@@ -186,7 +186,7 @@ export const dictionaries = {
         label: "免费",
         price: "$0",
         items: [
-          "✓ 全部 6 集视频教学",
+          "✓ 全部 8 集视频教学",
           "✓ 完整课程与免责声明",
           "✓ 五行参考卡",
           "✓ 记录器基础计分卡",
