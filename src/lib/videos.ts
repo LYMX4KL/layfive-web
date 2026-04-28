@@ -416,7 +416,7 @@ export const videos: Video[] = [
         body: [
           "After a straight hit (+21 units), you have a buffer. Only after that buffer exists can exposure increase — using winnings, not bankroll.",
           "First win: 2 units × 15 bets → +42. Second win: 3 units × 15 bets → +63. Third spin: a loss still leaves profit; a win creates a walk-away result.",
-          "At no point is the bankroll fully exposed again. This is risk redistribution, not pressing.",
+          "At no point is the bankroll fully exposed again. This is risk redistribution, not pressing — and it should be used rarely. Done too often, it becomes gambling, not bankroll management. Default to flat betting; only escalate when profit is locked aside and the session is firmly in the green.",
         ],
       },
     ],
@@ -424,7 +424,7 @@ export const videos: Video[] = [
       "Observe first. Wait for one loss before betting.",
       "Three-spin rule: stop after 4 consecutive misses.",
       "Never switch elements during a bad run.",
-      "Increase exposure only with winnings, never bankroll.",
+      "Increase exposure only with winnings, never bankroll — and use this rarely. Used too often, it becomes gambling.",
     ],
   },
 ];
